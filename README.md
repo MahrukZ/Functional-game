@@ -1,0 +1,2 @@
+# Functional-game
+After the initial client project planned had to be cancelled due to coronavirus restrictions, we had the challenge of converting a "test driven interface application" into a functional game, whilst making few amendments to the backend operation of the game itself. This project particularly built upon BDD, Unit Testing, Object-Oriented programming in Java, JDBC and MySQL database integration &amp; using branching and workflows such as GitFlow &amp; GitHub Flow vs Trunk-based Flow
