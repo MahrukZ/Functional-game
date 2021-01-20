@@ -1,0 +1,79 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'idea'
+    id 'application'
+}
+
+group 'com.nsa.cm6123-6623'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation ('org.junit.jupiter:junit-jupiter:5.6.0')
+    compile 'org.javatuples:javatuples:1.2'
+    compile group:'mysql',name:'mysql-connector-java', version: '8.0.16'
+}
+
+//test configuration
+
+test{
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+//application configuration
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.cm6123.snl.Application'
+    }
+}
+
+application {
+    mainClassName = 'com.cm6123.snl.Application'
+}
+
+
+//tool configuration
+
+checkstyle {
+    toolVersion = 8.25
+    checkstyleTest.enabled = false
+    checkstyleMain.enabled = false
+}
+
+jacocoTestReport {
+
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.8
+            }
+        }
+    }
+}
+
+//check.dependsOn jacocoTestCoverageVerification
+
+// create combined task
+
+task buildAndReport {
+    dependsOn build, jacocoTestReport
+}
